@@ -1,0 +1,42 @@
+name: clever-cards
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: clevercards
+    volumes: 
+      - pgdata:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - clever-cards
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - clever-cards
+    ports:
+      - 8080:8080
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./backend/.env
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks: 
+      - clever-cards
+    ports:
+      - 3000:3000
+volumes:
+  pgdata:
+
+networks:
+  clever-cards:
+    driver: bridge 
+
