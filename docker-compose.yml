@@ -1,6 +1,7 @@
 name: clever-cards
 
 services:
+  # Postgres container
   db:
     image: postgres:16
     restart: always
@@ -9,10 +10,11 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: clevercards
     volumes: 
-      - pgdata:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - clever-cards
+  # Adminer - web UI used to access database
   adminer:
     image: adminer
     restart: always
@@ -20,6 +22,7 @@ services:
       - clever-cards
     ports:
       - 8080:8080
+  # Backend container
   api:
     build:
       context: ./backend
@@ -33,9 +36,51 @@ services:
       - clever-cards
     ports:
       - 3000:3000
+    depends_on:
+      - db
+  # Frontend container
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./frontend/.env
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - clever-cards
+    ports:
+      - 5173:5173
+    # Placing command here ensures file structure will exist
+    command: npm run dev -- --host
+    depends_on:
+      - api
+  # Caddy - creates custom domain for TLS to run site on HTTPS
+  # Can remove port mapping for api and frontend since it will handle traffic
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      # Define certs for localhost for Caddy
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+      - frontend
+    networks:
+      - clever-cards
+  
+# Define named volume for persistent data storage
 volumes:
-  pgdata:
+  pg_data:
+  caddy_data:
+  caddy_config:
 
+# Define a Docker network for containers to communicate with each other
 networks:
   clever-cards:
     driver: bridge 
