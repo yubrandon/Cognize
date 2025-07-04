@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CreateCardInput from "../components/CreateCardInput";
+import createDeck from "../utils/createDeck";
 
 const CreateDeckPage = () => {
     const [name, setName] = useState("");
@@ -19,7 +20,10 @@ const CreateDeckPage = () => {
     }
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
-        const form = new FormData(e.target);
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        createDeck(formData);
+        console.log(formData);
         alert("Success!");
         navigate("/sets");
     }
