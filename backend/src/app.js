@@ -15,8 +15,15 @@ app.use(express.urlencoded({extended: true}));
 // Enable CORS 
 app.use(cors());
 
+// Use Router for API calls
+const apiRouter = require("./routes/apiRouter");
+// Pass requestst going to /api to the router
+app.use("/api", apiRouter);
+
 // Define route for root path
 app.use("/", (req, res) => res.status(200).json({msg: "success!", status: "online"}));
+
+app.use("/{*any}", (req, res) => res.status(404).json({msg:"page not found"}));
 
 // Set server port using environment variable or default
 const PORT = process.env.PORT || 3000;

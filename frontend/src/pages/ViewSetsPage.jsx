@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
+import createDeck from "../utils/createDeck";
 
 const temp = [];
 const ViewSetsPage = () => {
+    const handleClick = () => {
+        createDeck(1);
+    }
     return (
         <>
             <div>
@@ -19,6 +23,7 @@ const ViewSetsPage = () => {
                         <p>No sets created yet!</p>
                 }
             </div>
+            <button type="button" onClick={handleClick}>test</button>
         </>
     )
 }
