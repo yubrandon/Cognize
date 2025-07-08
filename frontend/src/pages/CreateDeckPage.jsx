@@ -22,8 +22,12 @@ const CreateDeckPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        createDeck(formData);
-        console.log(formData);
+        //parse data and complete api call to add to db
+        const deck = Object.fromEntries(formData);
+        const deckName = deck.dname;
+        delete(deck.dname);
+        console.log(deckName, deck);
+        await createDeck(deckName, deck);
         alert("Success!");
         navigate("/sets");
     }
