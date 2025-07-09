@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CreateCardInput from "../components/CreateCardInput";
 import createDeck from "../utils/createDeck";
+import formatCards from "../utils/formatCards";
 
 const CreateDeckPage = () => {
     const [name, setName] = useState("");
@@ -22,12 +23,13 @@ const CreateDeckPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        //parse data and complete api call to add to db
+        // Parse form data and make POST request to api
         const deck = Object.fromEntries(formData);
         const deckName = deck.dname;
         delete(deck.dname);
-        console.log(deckName, deck);
-        await createDeck(deckName, deck);
+        //console.log(deckName, deck);
+        const cards = formatCards(deck);
+        await createDeck(deckName, cards);
         alert("Success!");
         navigate("/sets");
     }
