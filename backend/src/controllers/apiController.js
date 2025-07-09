@@ -26,6 +26,8 @@ async function createDeck(req, res) {
     const cardIds = await Card.createCards(cards);
     console.log('deck id:', deckId);
     console.log('card ids:',cardIds);
+    await Join.createDecklist(deckId, cardIds);
+    //await Join.createDeckOwner(userId, deckId);
     res.status(200).json({msg:"success!"});
 }
 async function fetchDeck(req, res) {
