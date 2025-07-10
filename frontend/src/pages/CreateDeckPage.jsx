@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CreateCardInput from "../components/CreateCardInput";
-import createDeck from "../utils/createDeck";
-import formatCards from "../utils/formatCards";
+import createDeck from "../api/createDeck";
+import formatCards from "../api/formatCards";
 
 const CreateDeckPage = () => {
     const [name, setName] = useState("");

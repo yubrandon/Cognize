@@ -1,5 +1,5 @@
 import HomePage from "../pages/HomePage";
-import ViewSetsPage from "../pages/ViewSetsPage";
+import ViewDeckPage from "../pages/ViewDeckPage";
 import CreateDeckPage from "../pages/CreateDeckPage";
 
 const routes = [
@@ -10,7 +10,7 @@ const routes = [
     },
     {
         path: "/sets",
-        element: <ViewSetsPage />,
+        element: <ViewDeckPage />,
     },
     {
         path: "/sets/create",

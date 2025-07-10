@@ -9,7 +9,8 @@ async function getUser(req, res) {
 // Return a list of all decks
 async function getDecks(req, res) {
     //use authentication with apssport and req.user object to access user id
-    res.status(200).json({msg:"success!"});
+    const decks = await Deck.getDecks();
+    res.status(200).json({msg:"success!", decks: decks});
 }
 async function createDeck(req, res) {
     /*
