@@ -22,5 +22,4 @@ module.exports.getCards = async function getCards(deckId) {
                         WHERE deck_id = $1`;
     const { rows } = await pool.query(deckQuery, [deckId]);
     return rows;
-    
 }

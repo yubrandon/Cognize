@@ -8,6 +8,7 @@ const ViewCardsPage = () => {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    
     useEffect(() => {
         const fetchCards = async () => {
             const cardsData = await getCards(deckId)

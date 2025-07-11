@@ -38,10 +38,23 @@ async function getDeckCards(req, res) {
     const cards = await Card.getCards(id);
     res.status(200).json({msg:"success!", cards: cards});
 }
-async function editDeck(req, res) {
+async function deleteDeck(req, res) {
+    /*
+     * Delete a deck and all related cards
+     * Deck id is obtained from params
+    */
+    const { id } = req.params;
+    await Deck.deleteDeck(id);
     res.status(200).json({msg:"success!"});
 }
-async function deleteDeck(req, res) {
+async function editDeck(req, res) {
+    /*
+     * Edit a deck's cards
+     * Deck id is obtained from params
+     * Wipes existing deck and cards and reinserts
+        * Can configure to check differences on front end and pass into request
+        * Individual card changes (update, delete, add) are included in body
+    */
     res.status(200).json({msg:"success!"});
 }
 

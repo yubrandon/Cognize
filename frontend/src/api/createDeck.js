@@ -1,4 +1,4 @@
-
+// POST request to create a new deck with related cards
 const createDeck = async (name, deck) => {
     const url = `${import.meta.env.VITE_API_URL}/decks`;
     const response = await fetch(url, {
@@ -9,9 +9,7 @@ const createDeck = async (name, deck) => {
         body: JSON.stringify({deckName:name, cards:deck})
         //credentials:"include",
     });
-    console.log(response);
-    //const json = await response.json();
-    //console.log(json);
+    return response;
 }
 
 export default createDeck;

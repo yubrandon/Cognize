@@ -19,4 +19,18 @@ module.exports.getDecks = async function getDecks() {
     
 }
 
+// Delete a deck and its cards
+// Must delete cards first since decks will cascade into decklists
+module.exports.deleteDeck = async function deleteDeck(deckId) {
+    const cardQuery = ` DELETE FROM cards
+                        WHERE cards.id IN
+                        (   SELECT card_id 
+                            FROM decklists
+                            WHERE deck_id = $1)`;
+    await pool.query(cardQuery, [deckId]);
+    const deckQuery = ` DELETE FROM decks
+                        WHERE id = $1`;
+    await pool.query(deckQuery, [deckId]);
+}
+
 
