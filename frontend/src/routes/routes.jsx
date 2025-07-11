@@ -1,6 +1,7 @@
 import HomePage from "../pages/HomePage";
-import ViewSetsPage from "../pages/ViewSetsPage";
+import ViewDecksPage from "../pages/ViewDecksPage";
 import CreateDeckPage from "../pages/CreateDeckPage";
+import ViewCardsPage from "../pages/ViewCardsPage";
 
 const routes = [
     {
@@ -10,12 +11,16 @@ const routes = [
     },
     {
         path: "/sets",
-        element: <ViewSetsPage />,
+        element: <ViewDecksPage />,
     },
     {
         path: "/sets/create",
         element: <CreateDeckPage />
     },
+    {
+        path:"/sets/:deckId",
+        element: <ViewCardsPage />
+    }
 ];
 
 export default routes;

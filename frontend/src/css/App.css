@@ -1,5 +1,5 @@
 @import "tailwindcss";
 
-button, input {
+button, input, .deck-card {
     border:1px solid black;
 }

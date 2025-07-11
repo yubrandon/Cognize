@@ -11,11 +11,11 @@ apiRouter.get("/decks", apiController.getDecks);
 // Create a new deck entry
 apiRouter.post("/decks", apiController.createDeck);
 // Fetch a specific deck by ID
-apiRouter.get("/decks/:id", apiController.fetchDeck);
-// Edit an existing deck by ID
-apiRouter.put("/decks/:id", apiController.editDeck);
+apiRouter.get("/decks/:id", apiController.getDeckCards);
 // Delete an existing deck by ID
 apiRouter.delete("/decks/:id", apiController.deleteDeck);
+// Edit an existing deck by ID
+apiRouter.put("/decks/:id", apiController.editDeck);
 
 
 module.exports = apiRouter;
