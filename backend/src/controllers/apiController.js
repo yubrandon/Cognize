@@ -18,7 +18,7 @@ async function createDeck(req, res) {
      * Associate user id with deck id in OWNERS table (WIP - user authentication)
      * Create cards and fetch their ids
      * Associate cards with decks in DECKLISTS table
-*/
+    */
     const { deckName, cards } = req.body;
     //const id = req.user.id;
     // createDeck returns id of the new deck
@@ -29,8 +29,14 @@ async function createDeck(req, res) {
     //await Join.createDeckOwner(userId, deckId);
     res.status(200).json({msg:"success!"});
 }
-async function fetchDeck(req, res) {
-    res.status(200).json({msg:"success!"});
+async function getDeckCards(req, res) {
+    /*
+     * Fetch all cards associated with a certain deck
+     * Deck id is obtained from params
+    */
+    const { id } = req.params;
+    const cards = await Card.getCards(id);
+    res.status(200).json({msg:"success!", cards: cards});
 }
 async function editDeck(req, res) {
     res.status(200).json({msg:"success!"});
@@ -43,7 +49,7 @@ module.exports = {
     getUser,
     getDecks,
     createDeck,
-    fetchDeck,
+    getDeckCards,
     editDeck,
     deleteDeck
 }

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import getDecks from "../api/getDecks";
 import DeckViewCard from "../components/cards/DeckViewCard";
 
-const ViewDeckPage = () => {
+const ViewDecksPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
@@ -11,20 +11,18 @@ const ViewDeckPage = () => {
         const fetchData = async () => {
             const decks = await getDecks()
                 .catch((error) => setError(error));
-            decks ? setData(decks) : setData(false);
+            decks.length ? setData(decks) : setData(false);
             setIsLoading(false);
         }
         fetchData();
     },[]);
+
+    if(isLoading) return <h1>Loading...</h1>
+    if(error) return <h1>Error!</h1>
+
     return (
         <>
             <div>
-            { isLoading ? <h1>Loading...</h1> :
-                
-                error ? <h1>Error!</h1> : 
-                
-            (<>
-            
                 <h1>Your Study Sets</h1>
                 <button><Link to="./create">Create Set</Link></button>
                 {
@@ -33,17 +31,16 @@ const ViewDeckPage = () => {
                             return (
                                 <DeckViewCard 
                                     key={deck.id}
+                                    deckId={deck.id}
                                     deckName={deck.name}
                                 />
                             )
                         }) :
                         <p>No sets created yet!</p>
                 }
-            </>)
-            }
             </div>
         </>
     )
 }
 
-export default ViewDeckPage;
+export default ViewDecksPage;
