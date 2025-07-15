@@ -7,3 +7,4 @@ Learning platform that integrates AI to enhance retention and knowledge of mater
 * AI full implementation
 * Error handling in fetches
 * UI
+* Testing
