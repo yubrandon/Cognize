@@ -18,6 +18,11 @@ module.exports.getAll = async function getAll() {
     return rows;
     
 }
+module.exports.getName = async function getName(deckId) {
+    const fetchQuery = `SELECT name FROM decks WHERE id = $1`;
+    const { rows } = await pool.query(fetchQuery, [deckId]);
+    return rows[0].name;
+}
 
 // Delete a deck and its cards
 // Delete cards first to cascade into decklists

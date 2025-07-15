@@ -23,8 +23,9 @@ async function createDeck(req, res) {
 }
 async function getDeckCards(req, res) {
     const { deckId } = req.params;
+    const deckName = await Deck.getName(deckId);
     const cards = await Card.getCards(deckId);
-    res.status(200).json({msg:"success!", cards: cards});
+    res.status(200).json({msg:"success!", name:deckName, cards: cards});
 }
 async function deleteDeck(req, res) {
     const { deckId } = req.params;

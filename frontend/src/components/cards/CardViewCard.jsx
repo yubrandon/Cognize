@@ -1,10 +1,10 @@
 
-const CardViewCard = ({id, term, def}) => {
+const CardViewCard = ({id, term, definition}) => {
     return (
-        <div>
+        <div className="card">
             <p>id:{id}</p>
             <p>term:{term}</p>
-            <p>def:{def}</p>
+            <p>definition:{definition}</p>
             <br></br>
         </div>
     )
