@@ -1,4 +1,3 @@
-// POST request to create a new deck with related cards
 const createDeck = async (name, deck) => {
     const url = `${import.meta.env.VITE_API_URL}/decks`;
     const response = await fetch(url, {

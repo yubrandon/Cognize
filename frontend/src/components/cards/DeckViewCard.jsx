@@ -9,7 +9,8 @@ const DeckViewCard = (({deckId, deckName}) => {
     const handleDelete = async () => {
         const res = await deleteDeck(deckId);
         if(res.ok) {
-            alert('Deck deleted!');
+            const json = await res.json();
+            alert(json.msg);
             window.location.reload();
         }
     }
