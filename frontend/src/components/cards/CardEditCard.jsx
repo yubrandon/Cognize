@@ -3,6 +3,9 @@ import { useState } from "react";
 const CardEditCard = ({deckId, cardId, term, def, index, handleDelete}) => {
     const [termVal, setTermVal] = useState(term);
     const [defVal, setDefVal] = useState(def);
+    const handleClick = () => {
+        handleDelete(index);
+    }
 
     return (
         <div className="card">
@@ -19,7 +22,7 @@ const CardEditCard = ({deckId, cardId, term, def, index, handleDelete}) => {
             ></input>
             <button
                 type="button"
-                onClick={handleDelete}
+                onClick={handleClick}
             >Delete</button>
         </div>
     )

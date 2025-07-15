@@ -8,6 +8,7 @@ const ViewCardsPage = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [deckName, setDeckName] = useState('');
 
     useEffect(() => {
         const fetchCards = async () => {
@@ -15,6 +16,7 @@ const ViewCardsPage = () => {
                 .catch((error) => setError(error));
             if(!error) {
                 if(deckData) {
+                    setDeckName(deckData.name);
                     setData(deckData.cards);
                 }
             }
@@ -35,7 +37,7 @@ const ViewCardsPage = () => {
     if(error) return <h1>{error}</h1>
     return (
         <div>
-            <form>
+            <h1>{deckName}</h1>
             {
                 data.map((card, index) => {
                     return <CardViewCard 
@@ -47,7 +49,6 @@ const ViewCardsPage = () => {
                     />
                 })
             }
-            </form>
 
             <button
                 type="button"

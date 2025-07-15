@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import getCards from "../api/getCards";
 import CardEditCard from "../components/cards/CardEditCard";
+import formatCards from "../api/formatCards";
+import editDeck from "../api/editDeck";
 
 const EditCardsPage = () => {
     const { deckId } = useParams();
@@ -9,6 +11,8 @@ const EditCardsPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [deckName, setDeckName] = useState('');
+    const [newCards, setNewCards] = useState([]);
+
     useEffect(() => {
         const fetchCards = async () => {
             const deckData = await getCards(deckId)
@@ -25,20 +29,37 @@ const EditCardsPage = () => {
     }, []);
 
     const navigate = useNavigate();
-    const handleDelete = () => {
-
+    const handleDelete = (index) => {
+        setData(data.toSpliced(index,1));
     }
-    const handleSave = () => {
-        
+    const handleSave = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const deck = Object.fromEntries(formData);
+        const dname = deck.deckName;
+        delete(deck.deckName);
+        const newCards = formatCards(deck);
+        const res = await editDeck(deckId, dname, newCards);
+        if(res.ok) {
+            const json = await res.json();
+            alert(json.msg);
+            navigate('./..');
+        }
+        else {
+            alert('Error! Try again!');
+        }
     }
     const handleCancel = () => {
         navigate("./..")
+    }
+    const addCard = () => {
+        setData([...data, {term: '', definition:''}]);
     }
     if(loading) return <h1>Loading...</h1>
     if(error) return <h1>{error}</h1>
     return (
         <div>
-            <form>
+            <form onSubmit={handleSave}>
                 <label htmlFor="deckName">Deck Name</label>
                 <input type="text" id="deckName" name="deckName"
                     value={deckName}
@@ -59,17 +80,22 @@ const EditCardsPage = () => {
                     )
                 })
             }
+            <button type="button"
+                    onClick={addCard}
+            >Add a Card</button>
+            <div>
+                <button 
+                    type="submit"
+                >Save Changes
+                </button>
+                <button 
+                    type="button"
+                    onClick={handleCancel}
+                >Cancel
+                </button>
+            </div>
             </form>
-            <button 
-                type="button"
-                onClick={handleSave}
-            >Save Changes
-            </button>
-            <button 
-                type="button"
-                onClick={handleCancel}
-            >Cancel
-            </button>
+            
         </div>
     )
 }

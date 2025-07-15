@@ -31,7 +31,8 @@ const CreateDeckPage = () => {
         const cards = formatCards(deck);
         const res = await createDeck(deckName, cards);
         if(res.ok) {
-            alert("Success!");
+            const json = await res.json();
+            alert(json.msg);
             navigate("/sets");
         }
         else {
