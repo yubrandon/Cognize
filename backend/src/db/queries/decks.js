@@ -2,7 +2,7 @@ const pool = require("../pool");
 
 // Create an entry into decks
 // Returns the new deck id
-module.exports.createDeck = async function createDeck(deckName) {
+module.exports.create = async function create(deckName) {
     const createQuery = `INSERT INTO decks (name) VALUES ($1)`;
     await pool.query(createQuery, [deckName]);
     const idQuery = `SELECT MAX (id) FROM decks`;
@@ -11,7 +11,7 @@ module.exports.createDeck = async function createDeck(deckName) {
 }
 // Fetches all decks
 // Will have two functions for fetch by user id and shareable id in the future
-module.exports.getDecks = async function getDecks() {
+module.exports.getAll = async function getAll() {
     // Can also retrieve number of cards in each deck using deckid
     const fetchQuery = `SELECT * FROM decks`;
     const { rows } = await pool.query(fetchQuery);
@@ -20,7 +20,7 @@ module.exports.getDecks = async function getDecks() {
 }
 
 // Delete a deck and its cards
-// Must delete cards first since decks will cascade into decklists
+// Delete cards first to cascade into decklists
 module.exports.deleteDeck = async function deleteDeck(deckId) {
     const cardQuery = ` DELETE FROM cards
                         WHERE cards.id IN
@@ -33,4 +33,10 @@ module.exports.deleteDeck = async function deleteDeck(deckId) {
     await pool.query(deckQuery, [deckId]);
 }
 
+// Updating deck contents
+    // Currently rewriting entire deck using id
+    // will update to parse differences and update only necessar changes
+module.exports.update = async function update(deckId) {
+
+}
 

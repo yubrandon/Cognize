@@ -35,7 +35,7 @@ const CreateDeckPage = () => {
             navigate("/sets");
         }
         else {
-            alert("Error! Try again!");
+            alert("Error! Try again!f");
         }
         
     }
