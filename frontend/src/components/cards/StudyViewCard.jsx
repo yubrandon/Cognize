@@ -1,5 +1,5 @@
 
-const CardViewCard = ({id, term, definition}) => {
+const StudyViewCard = ({id, term, definition}) => {
     return (
         <div className="card">
             <p>id:{id}</p>
@@ -10,4 +10,4 @@ const CardViewCard = ({id, term, definition}) => {
     )
 }
 
-export default CardViewCard;
+export default StudyViewCard;

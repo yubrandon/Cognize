@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import getCards from "../api/getCards";
 import { useParams, useNavigate } from "react-router-dom";
-import CardViewCard from "../components/cards/CardViewCard";
+import StudyViewCard from "../components/cards/StudyViewCard";
 
 const ViewCardsPage = () => {
     const { deckId } = useParams();
-    const [data, setData] = useState(null);
+    const [cardData, setCardData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [deckName, setDeckName] = useState('');
@@ -17,7 +17,7 @@ const ViewCardsPage = () => {
             if(!error) {
                 if(deckData) {
                     setDeckName(deckData.name);
-                    setData(deckData.cards);
+                    setCardData(deckData.cards);
                 }
             }
             setLoading(false);
@@ -38,9 +38,14 @@ const ViewCardsPage = () => {
     return (
         <div>
             <h1>{deckName}</h1>
+            <button 
+                type="button"
+            >
+                Quiz Me!
+            </button>
             {
-                data.map((card, index) => {
-                    return <CardViewCard 
+                cardData.map((card, index) => {
+                    return <StudyViewCard 
                         key={card.id}
                         id={card.id}
                         term={card.term}

@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import getCards from "../api/getCards";
-import CardEditCard from "../components/cards/CardEditCard";
+import EditContentCard from "../components/cards/EditContentCard";
 import formatCards from "../api/formatCards";
 import editDeck from "../api/editDeck";
 
 const EditCardsPage = () => {
     const { deckId } = useParams();
-    const [data, setData] = useState(null);
+    const [cardData, setCardData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [deckName, setDeckName] = useState('');
-    const [newCards, setNewCards] = useState([]);
 
     useEffect(() => {
         const fetchCards = async () => {
@@ -19,7 +18,7 @@ const EditCardsPage = () => {
                 .catch((error) => setError(error));
             if(!error) {
                 if(deckData) {
-                    setData(deckData.cards);
+                    setCardData(deckData.cards);
                     setDeckName(deckData.name);
                 }
             }
@@ -30,7 +29,7 @@ const EditCardsPage = () => {
 
     const navigate = useNavigate();
     const handleDelete = (index) => {
-        setData(data.toSpliced(index,1));
+        setCardData(cardData.toSpliced(index,1));
     }
     const handleSave = async (e) => {
         e.preventDefault();
@@ -53,7 +52,7 @@ const EditCardsPage = () => {
         navigate("./..")
     }
     const addCard = () => {
-        setData([...data, {term: '', definition:''}]);
+        setCardData([...cardData, {id: -1, term: '', definition:''}]);
     }
     if(loading) return <h1>Loading...</h1>
     if(error) return <h1>{error}</h1>
@@ -66,9 +65,9 @@ const EditCardsPage = () => {
                     onChange={(e) => setDeckName(e.target.value)}
                 ></input>
             {
-                data.map((card, index) => {
+                cardData.map((card, index) => {
                     return (
-                        <CardEditCard 
+                        <EditContentCard 
                             key={card.id}
                             deckId={deckId}
                             cardId={card.id}
