@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import getCards from "../api/getCards";
-import EditContentCard from "../components/cards/EditContentCard";
-import formatCards from "../api/formatCards";
-import editDeck from "../api/editDeck";
+import getCards from "../../api/cards/getCards";
+import EditContentCard from "../../components/cards/EditContentCard";
+import formatCards from "../../api/cards/formatCards";
+import editDeck from "../../api/decks/editDeck";
 
 const EditCardsPage = () => {
     const { deckId } = useParams();

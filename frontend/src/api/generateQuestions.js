@@ -50,16 +50,16 @@ const generateQuestions = async (deckName, cards) => {
                                 You may create questions where answers may vary. A second request will be made to check answers that the student submits.
 
                                 **CRITICAL INSTRUCTION**
-                                ONLY output the raw JSON object without any explanations or formatting characters (backticks, curly braces, the word "json").
-                                The output MUST be valid JSON that can be parsed.
+                                ONLY output the raw JSON object without any explanations or formatting characters.
+                                DO NOT include any text such as backticks, curly braces, or the word "json".
+                                The output MUST be a valid JSON object that can be parsed.
 
                                 Final output:
                                 {
                                     "review": [...],
-                                    "learn": [...],
+                                    "study": [...],
                                     "challenge: [...]
                                 }
-                                Double check the output once more and ENSURE that no excess characters are being output other than the JSON object.
                                 `
                 },
             ]

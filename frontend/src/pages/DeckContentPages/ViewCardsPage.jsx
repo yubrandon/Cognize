@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import getCards from "../api/getCards";
+import getCards from "../../api/cards/getCards";
 import { useParams, useNavigate } from "react-router-dom";
-import StudyViewCard from "../components/cards/StudyViewCard";
+import StudyViewCard from "../../components/cards/StudyViewCard";
 
 const ViewCardsPage = () => {
     const { deckId } = useParams();

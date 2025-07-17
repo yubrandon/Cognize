@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import getCards from "../api/getCards";
-import generateQuestion from "../api/generateQuestions";
+import getCards from "../../api/cards/getCards";
+import generateQuestion from "../../api/generateQuestions";
 
 
 const QuizPage = () => {
@@ -17,16 +17,17 @@ const QuizPage = () => {
         console.log('generating');
         console.log(deckName, cardData);
         const res = await generateQuestion(deckName, cardData);
-        console.log(res);
         if(res.ok) {
-            const json = await res.json();
+            var json = await res.json();
             console.log(json);
             const questions = json.choices[0].message.content;
-            console.log(questions);
-            const q = JSON.parse(questions);
-            /*for(let index in q) {
-                console.log(q[index])
-            }*/
+            if(questions.includes("`")) {
+                json = json.replace(/`/g, "");
+            }
+            const jsonQuestions = JSON.parse(questions);
+            for(let array in jsonQuestions) {
+                console.log(jsonQuestions[array]);
+            }
         }
         else {
             const json = await res.json();
@@ -54,7 +55,9 @@ const QuizPage = () => {
         }
         fetchCards();
     }, []);
-
+    const handleNext = () => {
+        navigate("./review");
+    }
     //if(loading) return <h1>Creating your quiz...</h1>
     if(error) return <h1>{error}</h1>
     
@@ -64,6 +67,7 @@ const QuizPage = () => {
             onClick={testQuiz}>
                 quiz
             </button>
+            <button onClick={handleNext}>next</button>
         </div>
     )
 }
