@@ -3,6 +3,7 @@ import ViewDecksPage from "../pages/ViewDecksPage";
 import CreateDeckPage from "../pages/CreateDeckPage";
 import ViewCardsPage from "../pages/ViewCardsPage";
 import EditCardsPage from "../pages/EditCardsPage";
+import QuizPage from "../pages/QuizPage";
 
 const routes = [
     {
@@ -25,6 +26,10 @@ const routes = [
     {
         path:"/sets/:deckId/edit",
         element: <EditCardsPage />
+    },
+    {
+        path:"/sets/:deckId/quiz",
+        element: <QuizPage />
     }
 ];
 

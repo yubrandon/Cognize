@@ -32,6 +32,9 @@ const ViewCardsPage = () => {
     const handleEdit = () => {
         navigate("./edit")
     }
+    const handleQuiz = async () => {
+        navigate("./quiz");
+    }
 
     if(loading) return <h1>Loading...</h1>
     if(error) return <h1>{error}</h1>
@@ -40,6 +43,7 @@ const ViewCardsPage = () => {
             <h1>{deckName}</h1>
             <button 
                 type="button"
+                onClick={handleQuiz}
             >
                 Quiz Me!
             </button>

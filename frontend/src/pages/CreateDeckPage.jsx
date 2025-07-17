@@ -11,7 +11,13 @@ const CreateDeckPage = () => {
         setName(e.target.value);
     }
     const addCard = () => {
-        setCards([...cards, cards.length*Math.random()]);
+        if(cards.length<1000) {
+            setCards([...cards, cards.length*Math.random()]);
+        }
+        else {
+            alert("Max deck size reached!");
+        }
+        
     }
     const handleReturn = () => {
         navigate("./..")

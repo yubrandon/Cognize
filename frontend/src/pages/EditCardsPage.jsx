@@ -52,7 +52,13 @@ const EditCardsPage = () => {
         navigate("./..")
     }
     const addCard = () => {
-        setCardData([...cardData, {id: -1, term: '', definition:''}]);
+        if(cardData.length < 1000) {
+            setCardData([...cardData, {id: -1, term: '', definition:''}]);
+        }
+        else {
+            alert("Max deck size reached!");
+        }
+        
     }
     if(loading) return <h1>Loading...</h1>
     if(error) return <h1>{error}</h1>
