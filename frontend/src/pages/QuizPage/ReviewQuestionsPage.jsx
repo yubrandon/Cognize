@@ -1,5 +1,10 @@
-const ReviewQuestionsPage = () => {
 
+const ReviewQuestionsPage = () => {
+    return (
+        <div>
+            <p>review</p>
+        </div>
+    )
 }
 
-export default ReviewQuestionsPage
+export default ReviewQuestionsPage;

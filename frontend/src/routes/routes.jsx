@@ -4,7 +4,6 @@ import CreateDeckPage from "../pages/CreateDeckPage";
 import ViewCardsPage from "../pages/DeckContentPages/ViewCardsPage";
 import EditCardsPage from "../pages/DeckContentPages/EditCardsPage";
 import QuizPage from "../pages/QuizPage/QuizPage";
-import QuizRoutes from "./QuizRoutes";
 
 const routes = [
     {
@@ -30,8 +29,7 @@ const routes = [
     },
     {
         path:"/sets/:deckId/quiz",
-        element: <QuizPage />,
-        children: QuizRoutes
+        element: <QuizPage />
     }
 ];
 
