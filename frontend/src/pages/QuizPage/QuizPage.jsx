@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import getCards from "../../api/cards/getCards";
 import generateQuestion from "../../api/generateQuestions";
+import QuizStartPage from "./QuizStartPage";
 import ReviewQuestionsPage from "./ReviewQuestionsPage";
 import StudyQuestionsPage from "./StudyQuestionsPage";
 import ChallengeQuestionsPage from "./ChallengeQuestionsPage";
+import QuizCompletePage from "./QuizCompletePage";
 
 const QuizPage = () => {
     const [deckName, setDeckName] = useState('');
@@ -15,6 +17,9 @@ const QuizPage = () => {
     const mode = searchParams.get('mode');
     const { deckId } = useParams();
     const navigate = useNavigate();
+    const [reviewQuestions, setReviewQuestions] = useState([]);
+    const [studyQuestions, setStudyQuestions] = useState([]);
+    const [challengeQuestions, setChallengeQuestions] = useState([]);
 
     const changeMode = (newMode) => {
         setSearchParams({mode: newMode});
@@ -37,9 +42,9 @@ const QuizPage = () => {
             for(let array in jsonQuestions) {
                 console.log(jsonQuestions[array]);
             }
-           const reviewQuestions = jsonQuestions[0];
-           const studyQuestions = jsonQuestions[1];
-           const challengeQuestions = jsonQuestions[2];
+           setReviewQuestions(jsonQuestions[0]);
+           setStudyQuestions(jsonQuestions[1]);
+           setChallengeQuestions(jsonQuestions[2]);
            setLoading(false);
         }
         else {
@@ -70,12 +75,15 @@ const QuizPage = () => {
     }, []);
     if(loading) return <h1>Creating your quiz...</h1>
     if(error) return <h1>{error}</h1>
+
+    if(!mode) return <QuizStartPage changeMode={changeMode}/>
+    if(mode === "review") return <ReviewQuestionsPage questions={reviewQuestions} changeMode={changeMode}/>
+    if(mode === "study") return <StudyQuestionsPage questions={studyQuestions} changeMode={changeMode}/>
+    if(mode === "challenge") return <ChallengeQuestionsPage questions={challengeQuestions} changeMode={changeMode}/>
+    if(mode === "finish") return <QuizCompletePage />
+    
     return (
-        <div>
-            <button onClick={() => {changeMode('review')}}>review</button>
-            <button onClick={() => {changeMode('study')}}>study</button>
-            <button onClick={() => {changeMode('challenge')}}>challenge</button>
-        </div>
+        <h1>404 Page Not Found</h1>
     )
 
 }

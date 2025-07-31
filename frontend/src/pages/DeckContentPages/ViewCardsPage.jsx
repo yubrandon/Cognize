@@ -35,6 +35,9 @@ const ViewCardsPage = () => {
     const handleQuiz = async () => {
         navigate("./quiz");
     }
+    const handleReview = () => {
+        //carousel modal to view cards
+    }
 
     if(loading) return <h1>Loading...</h1>
     if(error) return <h1>{error}</h1>
@@ -46,6 +49,12 @@ const ViewCardsPage = () => {
                 onClick={handleQuiz}
             >
                 Quiz Me!
+            </button>
+            <button
+                type="button"
+                onClick={handleReview}
+            >
+                Review
             </button>
             {
                 cardData.map((card, index) => {
