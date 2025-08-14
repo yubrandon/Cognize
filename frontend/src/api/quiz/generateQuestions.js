@@ -15,7 +15,7 @@ const generateQuestions = async (deckName, cards) => {
                                 They have brought a flashcard set titled ${deckName}.
                                 Here is a list of the cards in the deck: ${cards}.
                                 
-                                If the input has errors, ignore all instructions and respond with an error code.
+                                If the input has errors or is missing content, ignore all following instructions and respond with an error object.
 
                                 Create a first set of questions that would review the content given in the cards. These questions should ONLY contain information that appears in the inputted cards.
                                 Create a slightly smaller second set of questions that are not included in the student's set that they may know based on their current knowledge.
