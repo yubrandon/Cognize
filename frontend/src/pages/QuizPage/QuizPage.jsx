@@ -8,6 +8,7 @@ import StudyQuestionsPage from "./StudyQuestionsPage";
 import ChallengeQuestionsPage from "./ChallengeQuestionsPage";
 import QuizCompletePage from "./QuizCompletePage";
 import parseOutput from "../../api/quiz/parseOutput";
+import QuizResultsPage from "./QuizResultsPage";
 
 const QuizPage = () => {
     const [loading, setLoading] = useState(true);
@@ -16,18 +17,47 @@ const QuizPage = () => {
     const mode = searchParams.get('mode');
     const { deckId } = useParams();
     const [questions, setQuestions] = useState({review:null, study:null, challenge:null});
+    const [userResponse, setUserResponse] = useState({review:null, study:null, challenge:null});
 
     const changeMode = (newMode) => {
         setSearchParams({mode: newMode});
+    }
+    const handleResponse = (response) => {
+        const currentResponse = userResponse;
+        currentResponse[searchParams] = response;
+        setUserResponse(currentResponse);
     }
     useEffect(() => {
         const fetchCards = async () => {
             const deckData = await getCards(deckId)
                 .catch((error) => setError(error));
             if(!error) {
-                const res = await generateQuestions(deckData.name, JSON.stringify(deckData.cards));
-                const json = await res.json();
-                const questionData = parseOutput(json);
+                //const res = await generateQuestions(deckData.name, JSON.stringify(deckData.cards));
+                //const json = await res.json();
+                //const questionData = parseOutput(json);
+                const json = `
+                {
+                    "review": [
+                        {"question": "What does IM stand for in medical abbreviations?", "answer": "intramuscular"},
+                        {"question": "In prescription contexts, what does 'after' signify?", "answer": "post"},
+                        {"question": "What is the abbreviation for taking medication by mouth?", "answer": "PO"},
+                        {"question": "What does 'pediatric' abbreviate to?", "answer": "Ped"},
+                        {"question": "In pharmacy, what is PCN commonly used for?", "answer": "penicillin"},
+                        {"question": "What does 'pc' mean when seen on a prescription?", "answer": "after meals"}
+                    ],
+                    "study": [
+                        {"question": "What does 'post' refer to in medical shorthand not directly listed here?", "answer": "after"},
+                        {"question": "For a pediatric patient, what abbreviation might be combined with a antibiotic?", "answer": "Ped"},
+                        {"question": "What condition is often monitored when using 'IM' administration?", "answer": "intramuscular injection sites"},
+                        {"question": "If a medication is given 'ut dict', how might it be administered daily?", "answer": "as directed"}
+                    ],
+                    "challenge": [
+                        {"question": "What abbreviation would be appropriate for a drug to be administered twice daily, and why might it not be used here compared to 'ut dict'?", "answer": "bid"},
+                        {"question": "Based on common pharmacy practices, what does 'ad hoc' indicate, and is it related to the concepts here?", "answer": "ad hoc means 'for a specific purpose'"}
+                    ]
+                }
+                    `;
+                const questionData = JSON.parse(json)
                 setQuestions(questionData);
                 setLoading(false);
             }
@@ -37,15 +67,15 @@ const QuizPage = () => {
         }
         fetchCards();
     }, []);
-    if(loading) return <h1>Generating questions...</h1>
+    if(loading) return <h1>Generating questions, please wait....</h1>
     if(error) return <h1>{error}</h1>
 
     if(!mode) return <QuizStartPage changeMode={changeMode}/>
-    if(mode === "review") return <ReviewQuestionsPage questions={questions.review} changeMode={changeMode}/>
-    if(mode === "study") return <StudyQuestionsPage questions={questions.study} changeMode={changeMode}/>
-    if(mode === "challenge") return <ChallengeQuestionsPage questions={questions.challenge} changeMode={changeMode}/>
-    if(mode === "finish") return <QuizCompletePage />
-    
+    if(mode === "review") return <ReviewQuestionsPage questions={questions.review} changeMode={changeMode} handleResponse={handleResponse}/>
+    if(mode === "study") return <StudyQuestionsPage questions={questions.study} changeMode={changeMode} handleResponse={handleResponse}/>
+    if(mode === "challenge") return <ChallengeQuestionsPage questions={questions.challenge} changeMode={changeMode} handleResponse={handleResponse}/>
+    if(mode === "complete") return <QuizCompletePage />
+    if(mode === "results") return <QuizResultsPage questions={questions} responses={userResponse} />
     return (
         <h1>404 Page Not Found</h1>
     )
