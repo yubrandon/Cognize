@@ -1,7 +1,14 @@
+import { useNavigate, useParams } from "react-router-dom";
 import QuizQuestionCard from "../../components/cards/QuizQuestionCard";
+import { useEffect } from "react";
 
 //if going back a page, most likely questions argument is undefined, so navigate to quiz start
 const QuizQuestionPage = ({questions, changeMode, handleResponse, nextMode}) => {
+    const navigate = useNavigate();
+    const { deckId } = useParams();
+    useEffect(() => {
+        if(!questions) navigate(`/sets/${deckId}`);
+    }, []);
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Obtain form inputs
