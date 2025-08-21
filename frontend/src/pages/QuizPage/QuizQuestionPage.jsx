@@ -1,6 +1,7 @@
 import QuizQuestionCard from "../../components/cards/QuizQuestionCard";
 
-const StudyQuestionsPage = ({questions, changeMode, handleResponse}) => {
+//if going back a page, most likely questions argument is undefined, so navigate to quiz start
+const QuizQuestionPage = ({questions, changeMode, handleResponse, nextMode}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Obtain form inputs
@@ -10,12 +11,11 @@ const StudyQuestionsPage = ({questions, changeMode, handleResponse}) => {
         // Use callback function to store user response in a global state
         handleResponse(responses);
         // Move to next page by changing parameters
-        changeMode(("challenge"));
+        changeMode((nextMode));
     }
-    console.log(questions, 'test');
     return (
         <div>
-            <p>Study</p>
+            <p>Review</p>
             <form onSubmit={handleSubmit}>
                 {
                     questions.map((question, index) => {
@@ -33,4 +33,4 @@ const StudyQuestionsPage = ({questions, changeMode, handleResponse}) => {
     )
 }
 
-export default StudyQuestionsPage;
+export default QuizQuestionPage;

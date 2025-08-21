@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom";
-const QuizCompletePage = (responses) => {
-    const navigate = useNavigate();
+const QuizCompletePage = ({ changeMode }) => {
     const handleResults = () => {
-        
+        changeMode("results");
     }
 
     return (
         <div>
-           <h1>Finished!</h1>
+           <h1>Congratulations! You have finished your quiz!</h1>
            <button type="button" onClick={handleResults}>View your results</button>
         </div>
     )

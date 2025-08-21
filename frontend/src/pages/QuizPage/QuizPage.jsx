@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import getCards from "../../api/cards/getCards";
-import generateQuestions from "../../api/quiz/generateQuestions";
 import QuizStartPage from "./QuizStartPage";
-import ReviewQuestionsPage from "./ReviewQuestionsPage";
-import StudyQuestionsPage from "./StudyQuestionsPage";
-import ChallengeQuestionsPage from "./ChallengeQuestionsPage";
 import QuizCompletePage from "./QuizCompletePage";
-import parseOutput from "../../api/quiz/parseOutput";
 import QuizResultsPage from "./QuizResultsPage";
+import QuizQuestionPage from "./QuizQuestionPage";
+import generateQuestions from "../../api/quiz/generateQuestions";
+import parseOutput from "../../api/quiz/parseOutput";
 
 const QuizPage = () => {
     const [loading, setLoading] = useState(true);
@@ -24,7 +22,7 @@ const QuizPage = () => {
     }
     const handleResponse = (response) => {
         const currentResponse = userResponse;
-        currentResponse[searchParams] = response;
+        currentResponse[mode] = response;
         setUserResponse(currentResponse);
     }
     useEffect(() => {
@@ -71,10 +69,10 @@ const QuizPage = () => {
     if(error) return <h1>{error}</h1>
 
     if(!mode) return <QuizStartPage changeMode={changeMode}/>
-    if(mode === "review") return <ReviewQuestionsPage questions={questions.review} changeMode={changeMode} handleResponse={handleResponse}/>
-    if(mode === "study") return <StudyQuestionsPage questions={questions.study} changeMode={changeMode} handleResponse={handleResponse}/>
-    if(mode === "challenge") return <ChallengeQuestionsPage questions={questions.challenge} changeMode={changeMode} handleResponse={handleResponse}/>
-    if(mode === "complete") return <QuizCompletePage />
+    if(mode === "review") return <QuizQuestionPage questions={questions.review} changeMode={changeMode} handleResponse={handleResponse} nextMode="study"/>
+    if(mode === "study") return <QuizQuestionPage questions={questions.study} changeMode={changeMode} handleResponse={handleResponse} nextMode="challenge"/>
+    if(mode === "challenge") return <QuizQuestionPage questions={questions.challenge} changeMode={changeMode} handleResponse={handleResponse} nextMode="complete"/>
+    if(mode === "complete") return <QuizCompletePage changeMode={changeMode}/>
     if(mode === "results") return <QuizResultsPage questions={questions} responses={userResponse} />
     return (
         <h1>404 Page Not Found</h1>
