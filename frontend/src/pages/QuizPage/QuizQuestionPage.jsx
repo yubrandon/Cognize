@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import QuizQuestionCard from "../../components/cards/QuizQuestionCard";
+import QuizQuestionCard from "../../components/quiz/QuizQuestionCard";
 import { useEffect } from "react";
 
 //if going back a page, most likely questions argument is undefined, so navigate to quiz start

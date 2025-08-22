@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import getDecks from "../../api/decks/getDecks";
-import DeckViewCard from "../../components/cards/DeckViewCard";
+import DeckViewCard from "../../components/deck/DeckViewCard";
 
 const ViewDecksPage = () => {
     const [isLoading, setIsLoading] = useState(true);

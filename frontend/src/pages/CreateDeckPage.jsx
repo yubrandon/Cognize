@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CreateCardInput from "../components/cards/CreateCardInput";
+import CreateCardInput from "../components/deck/CreateCardInput";
 import createDeck from "../api/decks/createDeck";
 import formatCards from "../api/cards/formatCards";
 
