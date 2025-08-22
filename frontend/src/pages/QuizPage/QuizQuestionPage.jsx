@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import QuizQuestionCard from "../../components/quiz/QuizQuestionCard";
 import { useEffect } from "react";
 
@@ -6,6 +6,8 @@ import { useEffect } from "react";
 const QuizQuestionPage = ({questions, changeMode, handleResponse, nextMode}) => {
     const navigate = useNavigate();
     const { deckId } = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const mode = searchParams.get('mode');
     useEffect(() => {
         if(!questions) navigate(`/sets/${deckId}`);
     }, []);
@@ -28,9 +30,10 @@ const QuizQuestionPage = ({questions, changeMode, handleResponse, nextMode}) => 
                     questions.map((question, index) => {
                         return (
                             <QuizQuestionCard 
-                                key={index}
+                                key={`${mode}${index}`}
                                 question={question.question}
-                                index={index}/>
+                                index={index}
+                            />
                         )
                     })
                 }

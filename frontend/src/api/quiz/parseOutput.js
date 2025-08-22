@@ -1,32 +1,28 @@
 const parseOutput = ( json ) => {
-    const questionSets = {};
-    const jsonQuestions = json.choices[0].message.content;
-    console.log('content',jsonQuestions);
-    /*// Sanitization
+    const resultsSets = {};
+    var jsonResult = json.choices[0].message.content;
+    // Sanitization
     // JSON output may include tilde (`) characters
-    if(jsonQuestions.includes("`")) {
-        jsonQuestions = jsonQuestions.replace(/`/g,"");
+    if(jsonResult.includes("`")) {
+        jsonResult = jsonResult.replace(/`/g,"");
     }
-    var questions;
-    try {
-        questions = JSON.parse(jsonQuestions);
+    var parsedResult = JSON.parse(jsonResult);
+    //console.log(parsedResult);
+
+    if(typeof parsedResult === "string") {
+        parsedResult = JSON.parse(jsonResult);
     }
-    catch (e) {
-        console.log('error',e);
-    }
-    if(questions.error) {
-        console.log(questions.error);
-        alert("Error generating questions! Please try again shortly.");
+
+    if(!parsedResult.review || !parsedResult.study || !parsedResult.challenge) {
+        throw new Error("Error occurred! Try again later!");
     }
     else {
-        for(let array in questions) {
-            //console.log(questions[array], array);
-            questionSets[array] = questions[array];
+        for(let array in parsedResult) {
+            console.log(parsedResult[array], array);
+            resultsSets[array] = parsedResult[array];
         }
-        console.log('sanitized questions:', questionSets);
-        return questionSets;
-    }*/
-
+    }
+    return resultsSets;
 }
 
 export default parseOutput;
