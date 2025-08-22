@@ -30,9 +30,8 @@ const QuizPage = () => {
             const deckData = await getCards(deckId)
                 .catch((error) => setError(error));
             if(!error) {
-                //const res = await generateQuestions(deckData.name, JSON.stringify(deckData.cards));
-                //const json = await res.json();
-                //const questionData = parseOutput(json);
+                //const generatedQuestions = await generateQuestions(deckData.name, JSON.stringify(deckData.cards));
+                //const questionData = parseOutput(generatedQuestions);
                 const json = `
                 {
                     "review": [

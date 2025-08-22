@@ -28,7 +28,7 @@ const generateQuestions = async (deckName, cards) => {
                                 
                                 Each set of questions you create should ONLY be in the format of an array of JSON objects. 
                                 Cards with non-English content implied such as defining an acronym with a latin root should have an English answer in order to keep it practical, 
-                                unless it can be inferred that the content being studied is directly learning a language.
+                                unless it can be inferred that the content being studied is directly learning a language. For example, a question would asking about the latin root of a certain word would most likely be irrelevant in the scope of the quiz.
                                 Challenge questions should be differ too far in scope from the previous questions created.
 
                                 The final output object with all three lists of questions should be formatted strictly according to the following example, where one JSON object contains a key for each array of questions:
@@ -38,7 +38,7 @@ const generateQuestions = async (deckName, cards) => {
                                         {"question":"What is USA an acronym for?", "answer":"United States of America"},
                                         {"question":"What does FL stand for?", "answer":"Florida"}
                                     ]},
-                                    "learn": {[
+                                    "study": {[
                                         {"question":"What is the capital of Montana", "answer":"Helena"}
                                     ]},
                                     "challenge": {[
@@ -65,7 +65,8 @@ const generateQuestions = async (deckName, cards) => {
             ]
         })
     });
-    return response;
+    const json = await response.json();
+    return json;
 }
 
 export default generateQuestions;

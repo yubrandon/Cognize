@@ -2,7 +2,7 @@ const parseOutput = ( json ) => {
     const questionSets = {};
     const jsonQuestions = json.choices[0].message.content;
     console.log('content',jsonQuestions);
-    // Sanitization
+    /*// Sanitization
     // JSON output may include tilde (`) characters
     if(jsonQuestions.includes("`")) {
         jsonQuestions = jsonQuestions.replace(/`/g,"");
@@ -25,7 +25,7 @@ const parseOutput = ( json ) => {
         }
         console.log('sanitized questions:', questionSets);
         return questionSets;
-    }
+    }*/
 
 }
 
