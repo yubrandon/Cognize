@@ -11,7 +11,7 @@ const mergeQuizData = (questions, responses) => {
         const currentAnswers = tempResponses[set];
 
         if(!currentAnswers) {
-            throw new ReferenceError("Undefined")
+            throw new ReferenceError("Failed to load results!")
         }
 
         for(let question in currentSet) {
