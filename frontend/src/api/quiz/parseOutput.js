@@ -1,26 +1,22 @@
 const parseOutput = async ( json ) => {
-    const resultsSets = {};
-    var jsonResult = await json.choices[0].message.content;
-    // Sanitization
-    // JSON output may include tilde (`) characters
-    if(jsonResult.includes("`")) {
-        jsonResult = await jsonResult.replace(/`/g,"");
+    const parsedResults = {};
+    var llmOutput = await json.choices[0].message.content;
+    if(llmOutput.includes("`")) {
+        llmOutput = await llmOutput.replace(/`/g,"");
     }
-    var parsedResult = await JSON.parse(jsonResult);
-
-    if(typeof parsedResult === "string") {
-        parsedResult = await JSON.parse(jsonResult);
+    var parsedOutput = await JSON.parse(llmOutput);
+    if(typeof parsedOutput === "string") {
+        parsedOutput = await JSON.parse(llmOutput);
     }
-    if(!parsedResult.review || !parsedResult.study || !parsedResult.challenge) {
+    if(!parsedOutput.review || !parsedOutput.study || !parsedOutput.challenge) {
         throw new Error("Error occurred! Try again later!");
     }
     else {
-        for(let array in parsedResult) {
-            //console.log(parsedResult[array], array);
-            resultsSets[array] = parsedResult[array];
+        for(let set in parsedOutput) {
+            parsedResults[set] = parsedOutput[set];
         }
     }
-    return resultsSets;
+    return parsedResults;
 }
 
 export default parseOutput;

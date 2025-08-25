@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import getCards from "../../api/cards/getCards";
 import QuizStartPage from "./QuizStartPage";
 import QuizCompletePage from "./QuizCompletePage";
@@ -16,6 +16,7 @@ const QuizPage = () => {
     const { deckId } = useParams();
     const [questions, setQuestions] = useState({review:null, study:null, challenge:null});
     const [userResponse, setUserResponse] = useState({review:null, study:null, challenge:null});
+    const navigate = useNavigate();
 
     const changeMode = (newMode) => {
         setSearchParams({mode: newMode});
@@ -30,36 +31,21 @@ const QuizPage = () => {
             const deckData = await getCards(deckId)
                 .catch((error) => setError(error));
             if(!error) {
-                //const generatedQuestions = await generateQuestions(deckData.name, JSON.stringify(deckData.cards));
-                //const questionData = parseOutput(generatedQuestions);
-                const json = `
-                {
-                    "review": [
-                        {"question": "What does IM stand for in medical abbreviations?", "answer": "intramuscular"},
-                        {"question": "In prescription contexts, what does 'after' signify?", "answer": "post"},
-                        {"question": "What is the abbreviation for taking medication by mouth?", "answer": "PO"},
-                        {"question": "What does 'pediatric' abbreviate to?", "answer": "Ped"},
-                        {"question": "In pharmacy, what is PCN commonly used for?", "answer": "penicillin"},
-                        {"question": "What does 'pc' mean when seen on a prescription?", "answer": "after meals"}
-                    ],
-                    "study": [
-                        {"question": "What does 'post' refer to in medical shorthand not directly listed here?", "answer": "after"},
-                        {"question": "For a pediatric patient, what abbreviation might be combined with a antibiotic?", "answer": "Ped"},
-                        {"question": "What condition is often monitored when using 'IM' administration?", "answer": "intramuscular injection sites"},
-                        {"question": "If a medication is given 'ut dict', how might it be administered daily?", "answer": "as directed"}
-                    ],
-                    "challenge": [
-                        {"question": "What abbreviation would be appropriate for a drug to be administered twice daily, and why might it not be used here compared to 'ut dict'?", "answer": "bid"},
-                        {"question": "Based on common pharmacy practices, what does 'ad hoc' indicate, and is it related to the concepts here?", "answer": "ad hoc means 'for a specific purpose'"}
-                    ]
+                try {
+                    const generatedQuestions = await generateQuestions(deckData.name, JSON.stringify(deckData.cards));
+                    const questionData = await parseOutput(generatedQuestions);
+                    setQuestions(questionData);
+                    setLoading(false);                
                 }
-                    `;
-                const questionData = JSON.parse(json)
-                setQuestions(questionData);
-                setLoading(false);
+                catch (e) {
+                    alert(e);
+                    navigate(`/sets/${deckId}`);                
+                }
+
             }
             else {
                 alert(error);
+                navigate(`/sets/${deckId}`);
             }
         }
         fetchCards();

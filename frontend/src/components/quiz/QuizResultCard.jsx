@@ -1,10 +1,10 @@
 const QuizResultCard = ({question, answer, correct, comments}) => {
     return (
         <div>
-            <p>{question}</p>
-            <p>{answer}</p>
-            <p>{correct}</p>
-            <p>{comments}</p>
+            <p>question:{question}</p>
+            <p>answer:{answer}</p>
+            <p>correct:{correct ? 'yes' : "no"}</p>
+            <p>comments:{comments}</p>
         </div>
     )
 }

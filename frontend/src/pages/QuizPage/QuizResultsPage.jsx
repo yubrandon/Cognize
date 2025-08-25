@@ -28,14 +28,13 @@ const QuizResultsPage = ({ questions, responses }) => {
             if(!error) {
                 try {
                     const quizData = mergeQuizData(questions, responses);
-                    console.log('quiz info',quizData);
                     const quizResults = await generateResults(deckData.name, JSON.stringify(quizData));
                     const resultData = await parseOutput(quizResults);
                     setResults(resultData);
                     setLoading(false);
                 }
                 catch (e) {
-                    console.log('error',e);
+                    alert(e);
                     navigate(`/sets/${deckId}`);
                 }            
             }
