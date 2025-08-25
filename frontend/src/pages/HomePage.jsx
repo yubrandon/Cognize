@@ -6,7 +6,7 @@ const HomePage = () => {
     <>
       <div>
         <h2>Study <span>smarter.</span></h2>
-        <h1><span>Cognize</span> it</h1>
+        <h1><span>Cognize</span></h1>
         <button><Link to="/sets">Get Started</Link></button>
       </div>
     </>

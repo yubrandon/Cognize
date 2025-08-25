@@ -36,7 +36,7 @@ const ViewCardsPage = () => {
         navigate("./quiz");
     }
     const handleReview = () => {
-        //carousel modal to view cards
+        navigate("./review");
     }
 
     if(loading) return <h1>Loading...</h1>
