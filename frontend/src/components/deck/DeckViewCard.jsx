@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import deleteDeck from "../../api/deleteDeck";
+import deleteDeck from "../../api/decks/deleteDeck";
 
 const DeckViewCard = (({deckId, deckName}) => {
     const navigate = useNavigate();

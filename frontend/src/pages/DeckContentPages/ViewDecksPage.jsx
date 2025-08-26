@@ -1,18 +1,18 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import getDecks from "../api/getDecks";
-import DeckViewCard from "../components/cards/DeckViewCard";
+import getDecks from "../../api/decks/getDecks";
+import DeckViewCard from "../../components/deck/DeckViewCard";
 
 const ViewDecksPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [data, setData] = useState(null);
+    const [cardData, setCardData] = useState(null);
     
     useEffect(() => {
         const fetchData = async () => {
             const decks = await getDecks()
                 .catch((error) => setError(error));
-            decks.length ? setData(decks) : setData(false);
+            decks.length ? setCardData(decks) : setCardData(false);
             setIsLoading(false);
         }
         fetchData();
@@ -27,8 +27,8 @@ const ViewDecksPage = () => {
                 <h1>Your Study Sets</h1>
                 <button><Link to="./create">Create Set</Link></button>
                 {
-                    data ?
-                        data.map((deck) => {
+                    cardData ?
+                        cardData.map((deck) => {
                             return (
                                 <DeckViewCard 
                                     key={deck.id}

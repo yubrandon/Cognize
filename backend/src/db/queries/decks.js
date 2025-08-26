@@ -13,7 +13,7 @@ module.exports.create = async function create(deckName) {
 // Will have two functions for fetch by user id and shareable id in the future
 module.exports.getAll = async function getAll() {
     // Can also retrieve number of cards in each deck using deckid
-    const getDecks = `SELECT * FROM decks`;
+    const getDecks = `SELECT * FROM decks ORDER BY id ASC`;
     const { rows } = await pool.query(getDecks);
     return rows;
     

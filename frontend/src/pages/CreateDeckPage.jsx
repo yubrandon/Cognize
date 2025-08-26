@@ -1,21 +1,33 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CreateCardInput from "../components/CreateCardInput";
-import createDeck from "../api/createDeck";
-import formatCards from "../api/formatCards";
+import CreateCardInput from "../components/deck/CreateCardInput";
+import createDeck from "../api/decks/createDeck";
+import formatCards from "../api/cards/formatCards";
 
 const CreateDeckPage = () => {
     const [name, setName] = useState("");
-    const [cards, setCards] = useState([0]);
+    const [cards, setCards] = useState([0,1]);
     const handleText = (e) => {
         setName(e.target.value);
     }
     const addCard = () => {
-        setCards([...cards, cards.length*Math.random()]);
+        if(cards.length<1000) {
+            setCards([...cards, cards.length*Math.random()]);
+        }
+        else {
+            alert("Max deck size reached!");
+        }
+        
+    }
+    const handleReturn = () => {
+        navigate("./..")
     }
     const handleDelete = (val) => {
-        if(cards.length > 1) {
+        if(cards.length > 2) {
             setCards(cards.toSpliced(cards.indexOf(val),1));
+        }
+        else {
+            alert("Deck must contain at least 2 cards!");
         }
         
     }
@@ -60,7 +72,8 @@ const CreateDeckPage = () => {
                     })
                 }
             </form>
-            <button onClick={addCard}>Add a Card</button>
+            <button type="button" onClick={addCard}>Add a Card</button>
+            <button type="button" onClick={handleReturn}>Return</button>
         </div>
     )
 }

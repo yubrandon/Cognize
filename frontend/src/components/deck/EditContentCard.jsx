@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CardEditCard = ({deckId, cardId, term, def, index, handleDelete}) => {
+const EditContentCard = ({deckId, cardId, term, def, index, handleDelete}) => {
     const [termVal, setTermVal] = useState(term);
     const [defVal, setDefVal] = useState(def);
     const handleClick = () => {
@@ -13,10 +13,10 @@ const CardEditCard = ({deckId, cardId, term, def, index, handleDelete}) => {
             <label htmlFor={`term${index}`}>Term</label>
             <input type="text" id={`term${index}`} name={`term${index}`}
                     value={termVal}
-                    onChange={(e) => setTermVal(e.target.value)}
+                    onChange={(e) => setTermVal(e.target.value)} required
             ></input>
             <label htmlFor={`definition${index}`}>Definition</label>
-            <input type="text" id={`definition${index}`} name={`definition${index}`}
+            <input type="text" id={`definition${index}`} name={`definition${index}`} required
                 value={defVal}
                 onChange={(e) => setDefVal(e.target.value)}
             ></input>
@@ -28,4 +28,4 @@ const CardEditCard = ({deckId, cardId, term, def, index, handleDelete}) => {
     )
 }
 
-export default CardEditCard;
+export default EditContentCard;

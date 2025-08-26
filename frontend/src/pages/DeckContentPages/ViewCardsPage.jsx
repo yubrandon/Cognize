@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import getCards from "../api/getCards";
+import getCards from "../../api/cards/getCards";
 import { useParams, useNavigate } from "react-router-dom";
-import CardViewCard from "../components/cards/CardViewCard";
+import StudyViewCard from "../../components/deck/StudyViewCard";
 
 const ViewCardsPage = () => {
     const { deckId } = useParams();
-    const [data, setData] = useState(null);
+    const [cardData, setCardData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [deckName, setDeckName] = useState('');
@@ -17,7 +17,7 @@ const ViewCardsPage = () => {
             if(!error) {
                 if(deckData) {
                     setDeckName(deckData.name);
-                    setData(deckData.cards);
+                    setCardData(deckData.cards);
                 }
             }
             setLoading(false);
@@ -32,15 +32,33 @@ const ViewCardsPage = () => {
     const handleEdit = () => {
         navigate("./edit")
     }
+    const handleQuiz = async () => {
+        navigate("./quiz");
+    }
+    const handleReview = () => {
+        navigate("./review");
+    }
 
     if(loading) return <h1>Loading...</h1>
     if(error) return <h1>{error}</h1>
     return (
         <div>
             <h1>{deckName}</h1>
+            <button 
+                type="button"
+                onClick={handleQuiz}
+            >
+                Quiz Me!
+            </button>
+            <button
+                type="button"
+                onClick={handleReview}
+            >
+                Review
+            </button>
             {
-                data.map((card, index) => {
-                    return <CardViewCard 
+                cardData.map((card, index) => {
+                    return <StudyViewCard 
                         key={card.id}
                         id={card.id}
                         term={card.term}

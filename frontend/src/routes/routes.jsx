@@ -1,8 +1,10 @@
 import HomePage from "../pages/HomePage";
-import ViewDecksPage from "../pages/ViewDecksPage";
+import ViewDecksPage from "../pages/DeckContentPages/ViewDecksPage";
 import CreateDeckPage from "../pages/CreateDeckPage";
-import ViewCardsPage from "../pages/ViewCardsPage";
-import EditCardsPage from "../pages/EditCardsPage";
+import ViewCardsPage from "../pages/DeckContentPages/ViewCardsPage";
+import EditCardsPage from "../pages/DeckContentPages/EditCardsPage";
+import QuizPage from "../pages/QuizPage/QuizPage";
+import DeckCarouselPage from "../pages/DeckContentPages/DeckCarouselPage";
 
 const routes = [
     {
@@ -25,6 +27,14 @@ const routes = [
     {
         path:"/sets/:deckId/edit",
         element: <EditCardsPage />
+    },
+    {
+        path:"/sets/:deckId/quiz",
+        element: <QuizPage />
+    },
+    {
+        path:"/sets/:deckId/review",
+        element: <DeckCarouselPage />
     }
 ];
 
