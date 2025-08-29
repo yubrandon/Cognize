@@ -1,6 +1,6 @@
 import HomePage from "../pages/HomePage";
 import ViewDecksPage from "../pages/DeckContentPages/ViewDecksPage";
-import CreateDeckPage from "../pages/CreateDeckPage";
+import CreateDeckPage from "../pages/DeckContentPages/CreateDeckPage";
 import ViewCardsPage from "../pages/DeckContentPages/ViewCardsPage";
 import EditCardsPage from "../pages/DeckContentPages/EditCardsPage";
 import QuizPage from "../pages/QuizPage/QuizPage";

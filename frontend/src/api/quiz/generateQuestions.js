@@ -27,9 +27,10 @@ const generateQuestions = async (deckName, cards) => {
 
                                 
                                 Each set of questions you create should ONLY be in the format of an array of JSON objects. 
-                                Cards with non-English content implied such as defining an acronym with a latin root should have an English answer in order to keep it practical, 
-                                unless it can be inferred that the content being studied is directly learning a language. For example, a question would asking about the latin root of a certain word would most likely be irrelevant in the scope of the quiz.
-                                Challenge questions should be differ too far in scope from the previous questions created.
+                                Do not create questions requiring language based knowledge, unless the content being studied is related to learning a language.
+                                Keep questions practical and within the scope of the topic.
+                                Challenge questions should not differ too far in scope from the previous questions created.
+                                When creating questions, if an anomaly in spelling or repitition occurs, you may assume this is a typo, but do not make questions about anomalies in the cards provided.
 
                                 The final output object with all three lists of questions should be formatted strictly according to the following example, where one JSON object contains a key for each array of questions:
                                 Example output:
@@ -51,7 +52,8 @@ const generateQuestions = async (deckName, cards) => {
 
                                 **CRITICAL INSTRUCTION**
                                 ONLY output the raw JSON object without any explanations or formatting characters.
-                                DO NOT include any text such as backticks, curly braces, or the word "json".
+                                DO NOT include any text such as backticks or the word "json". 
+                                DO NOT include any text that is not part of the object itself.
                                 The output MUST be a valid JSON object that can be parsed.
 
                                 Final output:

@@ -4,6 +4,7 @@ import EditContentCard from "../../components/deck/EditContentCard";
 import getCards from "../../api/cards/getCards";
 import formatCards from "../../api/cards/formatCards";
 import editDeck from "../../api/decks/editDeck";
+import Button from "../../components/buttons/Button";
 
 const EditCardsPage = () => {
     const { deckId } = useParams();
@@ -63,13 +64,18 @@ const EditCardsPage = () => {
     if(loading) return <h1>Loading...</h1>
     if(error) return <h1>{error}</h1>
     return (
-        <div>
+        <div className="flex ml-5 px-8 pt-4">
             <form onSubmit={handleSave}>
-                <label htmlFor="deckName">Deck Name</label>
+                <label htmlFor="deckName"
+                    className="flex flex-col text-3xl font-medium mb-2"
+                >Deck Name</label>
                 <input type="text" id="deckName" name="deckName"
                     value={deckName}
                     onChange={(e) => setDeckName(e.target.value)}
+                    className="rounded-sm p-1"
                 ></input>
+            <p className="text-3xl font-medium mb-2">Cards</p>
+            <div className="flex flex-col gap-4 mt-2 mb-4">
             {
                 cardData.map((card, index) => {
                     return (
@@ -85,19 +91,32 @@ const EditCardsPage = () => {
                     )
                 })
             }
-            <button type="button"
-                    onClick={addCard}
-            >Add a Card</button>
-            <div>
-                <button 
+            </div>
+            <div className="flex pt-2">
+                <Button type="button"
+                        onClick={addCard}
+                        text="Add a Card +"
+                        color="green"
+                        paddingY={2}
+                        classes="w-1/3"
+                ></Button>            
+            </div>
+            <div className="flex flex-row gap-3 py-2">
+                <Button 
                     type="submit"
-                >Save Changes
-                </button>
-                <button 
+                    text="Save Changes"
+                    color="indigo"
+                    paddingY={2}
+                    classes="w-1/3"
+                ></Button>
+                <Button 
                     type="button"
                     onClick={handleCancel}
-                >Cancel
-                </button>
+                    text="Cancel"
+                    color="red"
+                    paddingY={2}
+                    classes="w-1/4"
+                ></Button>
             </div>
             </form>
             

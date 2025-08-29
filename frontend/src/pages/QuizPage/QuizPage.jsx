@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import getCards from "../../api/cards/getCards";
 import QuizStartPage from "./QuizStartPage";
@@ -17,6 +17,7 @@ const QuizPage = () => {
     const [questions, setQuestions] = useState({review:null, study:null, challenge:null});
     const [userResponse, setUserResponse] = useState({review:null, study:null, challenge:null});
     const navigate = useNavigate();
+    const hasParsed = useRef(false);
 
     const changeMode = (newMode) => {
         setSearchParams({mode: newMode});
@@ -27,19 +28,30 @@ const QuizPage = () => {
         setUserResponse(currentResponse);
     }
     useEffect(() => {
+        if(hasParsed.current) return;
+        hasParsed.current = true;
         const fetchCards = async () => {
             const deckData = await getCards(deckId)
                 .catch((error) => setError(error));
             if(!error) {
+                let count = 0;
+                let maxCalls = 3;
                 try {
-                    const generatedQuestions = await generateQuestions(deckData.name, JSON.stringify(deckData.cards));
-                    const questionData = await parseOutput(generatedQuestions);
-                    setQuestions(questionData);
-                    setLoading(false);                
+                    while(true) {
+                        try {
+                            const generatedQuestions = await generateQuestions(deckData.name, JSON.stringify(deckData.cards));
+                            const questionData = await parseOutput(generatedQuestions);
+                            setQuestions(questionData);
+                            setLoading(false);                
+                        }
+                        catch (e) {
+                            if(++count === maxCalls) throw e;                
+                        }
+                    }
                 }
-                catch (e) {
-                    alert(e);
-                    navigate(`/sets/${deckId}`);                
+                catch(e) {
+                    alert('Error occurred! Try again later!');
+                    navigate(`/sets/${deckId}`);
                 }
 
             }
@@ -48,10 +60,10 @@ const QuizPage = () => {
                 navigate(`/sets/${deckId}`);
             }
         }
-        fetchCards();
+        //fetchCards();
+        setLoading(false);
     }, []);
-    if(loading) return <h1>Generating questions, please wait....</h1>
-    if(error) return <h1>{error}</h1>
+    if(loading) return <h1 className="flex flex-row justify-center p-3 text-lg font-medium">Creating questions, please wait....</h1>
 
     if(!mode) return <QuizStartPage changeMode={changeMode}/>
     if(mode === "review") return <QuizQuestionPage questions={questions.review} changeMode={changeMode} handleResponse={handleResponse} nextMode="study"/>

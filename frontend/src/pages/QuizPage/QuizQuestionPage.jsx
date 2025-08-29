@@ -1,6 +1,7 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import QuizQuestionCard from "../../components/quiz/QuizQuestionCard";
 import { useEffect } from "react";
+import Button from "/src/components/buttons/Button.jsx"
 
 //if going back a page, most likely questions argument is undefined, so navigate to quiz start
 const QuizQuestionPage = ({questions, changeMode, handleResponse, nextMode}) => {
@@ -23,9 +24,10 @@ const QuizQuestionPage = ({questions, changeMode, handleResponse, nextMode}) => 
         changeMode((nextMode));
     }
     return (
-        <div>
-            <p>Review</p>
+        <div className="flex flex-col p-5 ml-7">
+            <h1 className="text-4xl py-2">Review</h1>
             <form onSubmit={handleSubmit}>
+                <div className="flex flex-col py-2 gap-4">
                 {
                     questions.map((question, index) => {
                         return (
@@ -37,7 +39,8 @@ const QuizQuestionPage = ({questions, changeMode, handleResponse, nextMode}) => 
                         )
                     })
                 }
-                <button type="submit">submit</button>
+                </div>
+                <Button type="submit" color="green" text="Next" paddingX={4} paddingY={2} classes="mt-1"></Button>
             </form>
         </div>
     )
