@@ -1,0 +1,37 @@
+export default {
+    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+    theme: {
+      extend: {},
+    },
+    safelist: [
+        'px-1',
+        'px-2',
+        'px-3',
+        'px-4',
+        'px-5',
+        'px-6',
+        'px-7',
+        'px-8',
+        "py-1", 
+        "py-1.5", 
+        "py-2", 
+        "py-2.5", 
+        "py-3", 
+        "py-3.5", 
+        "py-4", 
+        "py-4.5", 
+        "py-5",
+        "bg-amber-500", 
+        "bg-amber-600",
+        "bg-red-500", 
+        "bg-red-600",
+        "bg-green-500", 
+        "bg-green-600",
+        "bg-slate-500", 
+        "bg-slate-600",
+        "bg-indigo-500", 
+        "bg-indigo-600"
+
+    ],
+    plugins: [],
+  }

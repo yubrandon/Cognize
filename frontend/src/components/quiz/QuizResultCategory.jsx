@@ -4,7 +4,6 @@ import QuizResultCard from "./QuizResultCard";
 
 const QuizResultCategory = ({category, questionSet}) => {
     const { deckId } = useParams();
-    console.log(questionSet);
     const navigate = useNavigate();
 
     if(!questionSet) {
@@ -12,8 +11,9 @@ const QuizResultCategory = ({category, questionSet}) => {
         navigate(`/sets/${deckId}`);
     }
     return (
-        <div>
-            <h1>{category}</h1>
+        <div className="">
+            <h1 className="text-4xl font-semibold">{category}</h1>
+            <div className="">
             {
                 questionSet.map((result, index) => {
                     return (
@@ -22,6 +22,7 @@ const QuizResultCategory = ({category, questionSet}) => {
                                 key={`${category}${index}`}
                                 question={result.question}
                                 answer={result.answer}
+                                userResponse={result.userResponse}
                                 correct={result.correct}
                                 comments={result.comments}
                             />
@@ -29,6 +30,7 @@ const QuizResultCategory = ({category, questionSet}) => {
                     )
                 })
             }
+            </div>
         </div>
     )
 }

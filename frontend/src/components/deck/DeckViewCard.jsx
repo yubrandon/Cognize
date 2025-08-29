@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import deleteDeck from "../../api/decks/deleteDeck";
+import Button from "../buttons/Button";
 
 const DeckViewCard = (({deckId, deckName}) => {
     const navigate = useNavigate();
@@ -15,18 +16,25 @@ const DeckViewCard = (({deckId, deckName}) => {
         }
     }
     return (
-        <div className="deck-card">
-            <p>Deck: {deckName}</p>
-            <div>
-                <button
+        <div className="flex flex-row justify-between px-5 py-4 border border-slate-400 rounded-lg bg-slate-300 shadow-md">
+            <h1 className="text-lg font-bold">{deckName}</h1>
+            <div className="flex flex-row gap-10">
+                <Button
                     type="button"
                     onClick={handleView}
-                >View</button>
-                <button
+                    text="View"
+                    color="indigo"
+                    paddingX={"6"}
+                    paddingY={1.5}
+                ></Button>
+                <Button
                     type="button"
                     onClick={handleDelete}
-                >Delete
-                </button>
+                    text="Delete"
+                    color="red"
+                    paddingX={4}
+                    paddingY={1.5}
+                ></Button>
             </div>
         </div>
     )

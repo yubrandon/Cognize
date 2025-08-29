@@ -1,6 +1,18 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-button, input, .deck-card, .card {
-    border:1px solid black;
-    margin:1px;
+@font-face {
+    font-family: 'Inter';
+    src: url("../../public/fonts/Inter/Inter-VariableFont_opsz,wght.ttf");
+}
+
+* {
+    font-family:"Inter";
+}
+body {
+    /* slate-100*/
+    background-color: #f1f5f9;
+
 }

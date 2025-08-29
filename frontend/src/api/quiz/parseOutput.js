@@ -16,6 +16,8 @@ const parseOutput = async ( json ) => {
             parsedResults[set] = parsedOutput[set];
         }
     }
+    console.log(parsedOutput);
+
     return parsedResults;
 }
 
